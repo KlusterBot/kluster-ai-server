@@ -53,7 +53,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-    let { id, message, model } = req.body;
+    try {
+        let { id, message, model } = req.body;
     const messages = chatCache.get(id) || [];
 
     console.log({model})
@@ -84,6 +85,11 @@ app.post("/", async (req, res) => {
     const data = getAction(response);
 
     res.send({ response: data.message, action: data.action });
+
+    } catch (error) {
+        console.log(error)
+        res.send({}).status(500);
+    }
 });
 
 app.listen(port, () => {
