@@ -38,7 +38,7 @@ async function digestMessage(r) {
           , t = await crypto.subtle.digest("SHA-256", e);
         return Array.from(new Uint8Array(t)).map(a=>a.toString(16).padStart(2, "0")).join("")
     } else
-        return sha256Exports.sha256(r).toString()
+        return crypto.createHash("sha256").update(r).digest("hex")
 }
 
 const generateSignature = async (r) => {
