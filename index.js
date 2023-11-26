@@ -67,6 +67,7 @@ app.post("/", async (req, res) => {
     } else {
         messages.push({ role: "user", content: message });
     }
+    console.log(messages);
 
     console.log("Me:", message);
 
