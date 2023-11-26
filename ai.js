@@ -1,51 +1,21 @@
-const axios = require("axios");
-const crypto = require("crypto");
+const OpenAI = require("openai");
 
-const messages = [];
+// Create an instance of the OpenAI API client
+const openai = new OpenAI({
+    apiKey: "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",
+});
 
 const sendMessage = async (messages) => {
-    const pass = null;
     try {
-        const now = Date.now()
-        const get = await axios.post("https://chatbb.free2gpt.xyz/api/generate", {
-            messages: messages,
-            time: now,
-            pass,
-            sign: await generateSignature({
-                t: now,
-                m: messages?.[messages.length - 1]?.content || ""
-            })
+        const completion = await openai.chat.completions.create({
+            messages,
+            model: "gpt-3.5-turbo",
         });
 
-        console.log(get.data);
-        
-        try {
-            const response = await get.data;
-            return response;
-        } catch (error) {
-            error.response.data.error
-            return "An error occured!";
-        }
-    } catch (q) {
-        console.error(q);
+        return completion.choices[0].message.content;
+    } catch (error) {
+        return "Something went wrong!";
     }
+};
 
-}
-
-async function digestMessage(r) {
-    if (typeof crypto < "u" && crypto?.subtle?.digest) {
-        const e = new TextEncoder().encode(r)
-          , t = await crypto.subtle.digest("SHA-256", e);
-        return Array.from(new Uint8Array(t)).map(a=>a.toString(16).padStart(2, "0")).join("")
-    } else
-        return crypto.createHash("sha256").update(r).digest("hex").toString();
-}
-
-const generateSignature = async (r) => {
-    const {t: e, m: t} = r
-      , n = {}.PUBLIC_SECRET_KEY || ""
-      , a = `${e}:${t}:${n}`;
-    return await digestMessage(a)
-}
-
-module.exports = sendMessage
+module.exports = sendMessage;
