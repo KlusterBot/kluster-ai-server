@@ -61,7 +61,7 @@ app.post("/", async (req, res) => {
 
     if (messages.length === 0) {
         messages.push({
-            role: "user",
+            role: "system",
             content: getFirstMessage(message, model),
         });
     } else {
