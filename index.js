@@ -52,6 +52,12 @@ app.get("/", (req, res) => {
     res.send("AI Server is active!");
 });
 
+
+app.get("/clean", (req, res) => {
+    chatCache.flushAll();
+    res.send("Cache cleared!");
+});
+
 app.post("/", async (req, res) => {
     try {
         let { id, message, model } = req.body;
