@@ -2,7 +2,7 @@ const OpenAI = require("openai");
 
 // Create an instance of the OpenAI API client
 const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: process.env.OPENAI_KEY,
 });
 
 const sendMessage = async (messages) => {
