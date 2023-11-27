@@ -14,6 +14,7 @@ const sendMessage = async (messages) => {
 
         return completion.choices[0].message.content;
     } catch (error) {
+        console.log(error);
         return "Something went wrong!";
     }
 };
